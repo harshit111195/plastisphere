@@ -51,8 +51,8 @@ export default function Home() {
       isAnimating = true;
       gsap.to(window, {
         scrollTo: { y: Math.max(0, targetY), autoKill: false },
-        duration: 1.2,
-        ease: "expo.inOut",
+        duration: 1.8,
+        ease: "power4.inOut",
         onComplete: () => {
           isAnimating = false;
           ScrollTrigger.refresh();
@@ -116,7 +116,7 @@ export default function Home() {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5,
+          scrub: 1,
           onUpdate: (self) => {
             targetProgress = self.progress;
             if (rafId === null) {
