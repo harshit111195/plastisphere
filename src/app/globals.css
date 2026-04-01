@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #ededed;
+  --background: #000000;
+
+  /* ─── Fluid type scale (320px → 1440px) ─── */
+  --text-hero:    clamp(2.5rem, 1rem + 5vw, 4.5rem);
+  --text-h1:      clamp(2rem, 0.8rem + 4vw, 3.75rem);
+  --text-h2:      clamp(1.6rem, 0.7rem + 3.2vw, 3rem);
+  --text-stat:    clamp(2.5rem, 0.8rem + 4.5vw, 4.5rem);
+  --text-stat-sm: clamp(1.75rem, 0.6rem + 3.5vw, 2.5rem);
+  --text-sub:     clamp(1.05rem, 0.7rem + 1.2vw, 1.5rem);
+  --text-body:    clamp(0.875rem, 0.65rem + 0.6vw, 1.05rem);
+  --text-small:   clamp(0.75rem, 0.6rem + 0.4vw, 0.875rem);
+  --text-cta:     clamp(1.1rem, 0.8rem + 1.2vw, 1.5rem);
+  --text-label:   clamp(0.6rem, 0.45rem + 0.35vw, 0.75rem);
+  --text-cite:    clamp(0.55rem, 0.42rem + 0.3vw, 0.65rem);
+  --text-nav:     clamp(0.65rem, 0.5rem + 0.35vw, 0.8rem);
+
+  /* ─── Fluid spacing ─── */
+  --space-section: clamp(1.25rem, 0.5rem + 3vw, 6rem);
+  --space-sm:      clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
+  --space-md:      clamp(1rem, 0.5rem + 1.5vw, 2rem);
+  --space-lg:      clamp(1.5rem, 0.5rem + 2.5vw, 3rem);
+}
+
+html {
+  color-scheme: dark;
+  scroll-snap-type: y mandatory;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scroll snap sections ─── */
+.snap-section {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  contain: layout paint;
+  padding-left: var(--space-section);
+  padding-right: var(--space-section);
+}
+
+/* ─── Fluid typography classes ─── */
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.fluid-hero     { font-size: var(--text-hero); }
+.fluid-h1       { font-size: var(--text-h1); }
+.fluid-h2       { font-size: var(--text-h2); }
+.fluid-stat     { font-size: var(--text-stat); }
+.fluid-stat-sm  { font-size: var(--text-stat-sm); }
+.fluid-sub      { font-size: var(--text-sub); }
+.fluid-body     { font-size: var(--text-body); }
+.fluid-small    { font-size: var(--text-small); }
+.fluid-cta      { font-size: var(--text-cta); }
+.fluid-nav      { font-size: var(--text-nav); }
+
+/* ─── Fluid spacing utilities ─── */
+.mt-fluid-sm    { margin-top: var(--space-sm); }
+.mt-fluid-md    { margin-top: var(--space-md); }
+.my-fluid-sm    { margin-top: var(--space-sm); margin-bottom: var(--space-sm); }
+.mb-fluid-md    { margin-bottom: var(--space-md); }
+.gap-fluid-md   { gap: var(--space-md); }
+
+.text-glow {
+  text-shadow: 0 0 60px rgba(255, 255, 255, 0.12), 0 0 120px rgba(255, 255, 255, 0.04);
+}
+
+.stat-number {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.citation {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-cite);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.label {
+  font-family: var(--font-mono), monospace;
+  font-size: var(--text-label);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* ─── Staggered reveal — GPU-only ─── */
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.stagger-children > * {
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: stagger-in 0.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-play-state: paused;
+}
+
+.stagger-children.is-visible > * {
+  animation-play-state: running;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 600ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 700ms; }
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  .stagger-children > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .animate-pulse {
+    animation: none;
+  }
+}
+
+/* Thin decorative line */
+.line-accent {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
