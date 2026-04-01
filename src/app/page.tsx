@@ -74,7 +74,7 @@ export default function Home() {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.5,
+          scrub: 0.5,
           onUpdate: (self) => {
             targetProgress = self.progress;
             if (rafId === null) {

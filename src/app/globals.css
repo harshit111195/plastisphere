@@ -29,7 +29,6 @@
 
 html {
   color-scheme: dark;
-  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -40,10 +39,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ─── Scroll snap sections ─── */
+/* ─── Scroll sections ─── */
 .snap-section {
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
   contain: layout paint;
   padding-left: var(--space-section);
   padding-right: var(--space-section);
@@ -131,7 +128,6 @@ body {
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-snap-type: none;
     scroll-behavior: auto;
   }
 
