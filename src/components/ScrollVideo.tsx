@@ -15,6 +15,7 @@ export const ScrollVideo = forwardRef<HTMLVideoElement>(function ScrollVideo(_, 
         playsInline
         preload="auto"
         onLoadedData={() => setHasVideo(true)}
+        onCanPlayThrough={() => setHasVideo(true)}
       />
 
       {!hasVideo && (

@@ -56,18 +56,40 @@ export default function Home() {
     const video = videoRef.current;
     if (!video) return;
 
+    let rafId: number | null = null;
+    let targetProgress = 0;
+
     const onReady = () => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.5,
-        onUpdate: (self) => {
-          if (video.duration) {
-            video.currentTime = self.progress * video.duration;
-          }
-        },
-      });
+      // Wait for enough data to scrub smoothly
+      const waitForBuffer = () => {
+        if (video.readyState >= 4) {
+          startScrub();
+        } else {
+          video.addEventListener("canplaythrough", startScrub, { once: true });
+        }
+      };
+
+      const startScrub = () => {
+        ScrollTrigger.create({
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5,
+          onUpdate: (self) => {
+            targetProgress = self.progress;
+            if (rafId === null) {
+              rafId = requestAnimationFrame(() => {
+                if (video.duration) {
+                  video.currentTime = targetProgress * video.duration;
+                }
+                rafId = null;
+              });
+            }
+          },
+        });
+      };
+
+      waitForBuffer();
     };
 
     if (video.readyState >= 1) onReady();
@@ -78,6 +100,7 @@ export default function Home() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       ScrollTrigger.getAll().forEach((t) => t.kill());
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [handleKeyDown]);
 
