@@ -61,7 +61,7 @@ export default function Home() {
         trigger: containerRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: true,
+        scrub: 0.5,
         onUpdate: (self) => {
           if (video.duration) {
             video.currentTime = self.progress * video.duration;
